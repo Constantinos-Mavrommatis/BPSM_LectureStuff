@@ -1,0 +1,21 @@
+
+#Exercise 1-------------------------------------------------------
+
+#First we get the file
+
+wget http://nematodes.org/teaching/bioinformatics/nem.fasta
+
+#Second we create a blastable database using nem.fasta
+
+makeblastdb -in nem.fasta -dbtype prot -out nem
+
+#Exercise 2-----------------------------------------------------------
+
+wget -O testsequence.fasta "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nuccore&id=NC_015119.1&strand=1&seq_start=1426&seq_stop=2962&rettype=fasta&retmode=text"
+
+
+
+
+
+
+
