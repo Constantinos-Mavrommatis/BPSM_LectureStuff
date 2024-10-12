@@ -7,6 +7,24 @@ rm -f *.details #Cleaning the output file
 echo -e "Proccecing the file..." #Giving feedback
 unset count
 
+read -p "Would you like to get to get the output of all countries: " all_search
+
+if [[ ${all_search} == "YES" ]]
+ then
+
+ while read name email city birthday_day birthday_month birthday_year country #We give which field a varibale
+ do
+	 if test -z || test ${country} == "country"
+	 then
+         echo -e "${count}\t${name}\t$city\t${country}" >> ${country// /}.details
+	 fi
+ done < example_people_data.tsv
+        else echo - e "rrr"
+		 fi
+echo -e "DONE"
+
+
+
 ###################################################################################################################################
 #Country specific search
 ####################################################################################################################################
@@ -34,24 +52,5 @@ if [[ ${run_search} == "YES" ]]
  echo -e "The amount of people from ${wantedcountry}: ${count}"
 
 else
-echo -e "Skipping search"
-
-fi 
-
- 
-#########################################################################################################################
-#
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ echo -e "Skipping search"
+fi
