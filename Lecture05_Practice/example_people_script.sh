@@ -1,35 +1,46 @@
-#!/bin/bash
+#!/etin/bash
 
 #Inputing the file we want
 
-IFS=$'\t'
-rm -f *.details
-while read name email city birthday_day birthday_month birthday_year country
-do
+IFS=$'\t' 
+rm -f *.details #Cleaning the output file
+echo -e "Proccecing the file..." #Giving feedback
+unset count
 
-#We need to give a feedback of proccecing the file
+###################################################################################################################################
+#Country specific search
+####################################################################################################################################
 
-wantedcountry="Mozambique"
+read -p "Do you want to search for a specific country (YES/NO): " run_search  #Asking for an inpu to run this specific part of the code that asks for a specififc country
 
+if [[ ${run_search} == "YES" ]]
+ then 
 
+ read -p "Please enter the country you want to search for: " wantedcountry #Gives the variable an input best on the user
 
-#We need to count the lines with which specific country in heading 7 and then produce an ououtput file with heading number 1 that has those names
-if [[ ${country} == ${wantedcountry} ]]
- then
- echo -e "${name}\t${country}"
- echo -e "${name}\t${country}" >> Specified_Country_Output.details
-fi
-done < example_people_data.tsv
-     
+ while read name email city birthday_day birthday_month birthday_year country #We give which field a varibale
+ do
 
+ #We need to count the lines with which specific country in heading 7 and then produce an ououtput file with heading number 1 that has those names
+ if [[ ${country} == ${wantedcountry} ]]
+  then
+  count=$((count +1)) 
+  echo -e "${name}\t${country}"
+  echo -e "${name}\t${country}" >> Specified_Country_Output.details
+ fi
 
-#we need an output file 
+ done < example_people_data.tsv
+ 
+ echo -e "The amount of people from ${wantedcountry}: ${count}"
 
-#we need an output on the screen tha everything is finished and a file has been created
+else
+echo -e "Skipping search"
+
+fi 
 
  
-
-
+#########################################################################################################################
+#
 
 
 
