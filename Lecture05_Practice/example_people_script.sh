@@ -3,7 +3,7 @@
 #Inputing the file we want
 
 IFS=$'\t'
-
+rm -f *.details
 while read name email city birthday_day birthday_month birthday_year country
 do
 
@@ -17,7 +17,7 @@ wantedcountry="Mozambique"
 if [[ ${country} == ${wantedcountry} ]]
  then
  echo -e "${name}\t${country}"
-
+ echo -e "${name}\t${country}" >> Specified_Country_Output.details
 fi
 done < example_people_data.tsv
      
