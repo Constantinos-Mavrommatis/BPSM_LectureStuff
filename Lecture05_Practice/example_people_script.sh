@@ -14,18 +14,20 @@ if [[ ${all_search} == "YES" ]]
 
  while read name email city birthday_day birthday_month birthday_year country #We give which field a varibale
  do
-	 if test -z || test ${country} == "country"
+	 if test -z ${name} || test ${country} == "country"
 	 then
-         echo -e "${count}\t${name}\t$city\t${country}" >> ${country// /}.details
-	 fi
- done < example_people_data.tsv
-        else echo - e "rrr"
+		 echo "Ignoring"
+	 else
+		                 echo -e "${count}\t${name}\t$city\t${country}" >> ${country// /}.details 
 		 fi
-echo -e "DONE"
+	 done < example_people_data.tsv
+ else
+	 echo "Skipping search"
+fi
 
+echo "Done Process" 
 
-
-###################################################################################################################################
+##################################################################################################################################
 #Country specific search
 ####################################################################################################################################
 
