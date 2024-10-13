@@ -7,7 +7,7 @@ inputfile="/localdisk/home/s2748062/Exercises/Lecture06_Practice/Exercises/blast
 echo -e "${inputfile}"
 rm -f *.exercise.out
 
-read -p  "Would you like a list of all the Subject Acessions of the Hpos (YES/NO): " run_S_acc
+read -p  "Would you like a list of all the Subject Acessions of the HSPs (YES/NO): " run_S_acc
 
 if [[ "${run_S_acc}" == YES ]]
 then
@@ -21,9 +21,32 @@ then
 		fi
 	
 	done < ${inputfile}
+
 echo -e "DONE"
+
 else
 	echo "Skipping"
 fi
 	
+read -p  "Would you like a list of all the Aligment Length and Percent ID of the HSPs (YES/NO): " run_Align_length
+
+if [[ "${run_Align_length}" == YES ]]
+then
+	while read wholeline
+	do
+		if [[ "${wholeline:0:1}" != "#" ]]
+		then
+		       	read Q_acc S_acc pc_identity alignment_length mismatches gap_opens Q_start Q_end S_start S_end evalue bitscore <<< ${wholeline} #Here we seperating the fields
+			echo -e "${alignment_length}\t${pc_identity}"
+			echo -e "${alignment_length}\t${pc_identity}" >> Align_length.exercise.out
+		fi
+	done < ${inputfile}
+
+	echo "DONE"
+
+else
+	echo "Skipping"
+fi
+
+
 
