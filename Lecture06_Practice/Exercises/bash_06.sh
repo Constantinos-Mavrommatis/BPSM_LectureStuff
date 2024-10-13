@@ -48,5 +48,47 @@ else
 	echo "Skipping"
 fi
 
+read -p  "Would you like a list of all the HSPs with a specific mismatch number (YES/NO): " run_miss_matches
+if [[ "${run_miss_matches}" == YES ]]
+then 
+	read -p "What number of mismatches would you like: " number
+	read -p "Would you like the number of mismatches that are Greater or Less to the number of mismatches you inputed: " different
+	
+	if [[ "${different}" == Greater ]] 
+	then
+		while read wholeline
+		do
+			if [[ "${wholeline:0:1}" != "#" ]]
+			then
+				read Q_acc S_acc pc_identity alignment_length mismatches gap_opens Q_start Q_end S_start S_end evalue bitscore <<< ${wholeline} #Here we seperating the fields
+				if [[ "${mismatches}" -gt "${number}" ]]
+				then
+					echo -e "${mismatches}"
+					echo -e "${mismatches}" >> mismatches.exercise.out
+				fi
+			fi
+		done < ${inputfile}
+		echo "DONE"
+	else
+	       	[[ "${different}" == Less ]]
+		 while read wholeline
+		 do
+			 if [[ "${wholeline:0:1}" != "#" ]]
+			 then
+				 read Q_acc S_acc pc_identity alignment_length mismatches gap_opens Q_start Q_end S_start S_end evalue bitscore <<< ${wholeline} #Here we seperating the fields
+				 if [[ "${mismatches}" -lt "${number}" ]]
+				 then
+					 echo -e "${mismatches}"
+                                         echo -e "${mismatches}" >> mismatches.exercise.out
+				 fi
+			 fi
+		 done < ${inputfile}
+		 echo "DONE"
+	fi
+else
+	echo "Skipping"
+fi
+
+
 
 
