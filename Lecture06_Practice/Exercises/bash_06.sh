@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/bash`
 
 #Fields: query acc.ver, subject acc.ver, % identity, alignment length, mismatches, gap opens, q. start, q. end, s. start, s. end, evalue, bit score
 
@@ -64,7 +64,7 @@ then
 				if [[ "${mismatches}" -gt "${number}" ]]
 				then
 					echo -e "${mismatches}"
-					echo -e "${mismatches}" >> mismatches.exercise.out
+					echo -e "${wholeline}" >> mismatches.exercise.out
 				fi
 			fi
 		done < ${inputfile}
@@ -79,7 +79,7 @@ then
 				 if [[ "${mismatches}" -lt "${number}" ]]
 				 then
 					 echo -e "${mismatches}"
-                                         echo -e "${mismatches}" >> mismatches.exercise.out
+                                         echo -e "${wholeline}" >> mismatches.exercise.out
 				 fi
 			 fi
 		 done < ${inputfile}
@@ -88,6 +88,25 @@ then
 else
 	echo "Skipping"
 fi
+
+read -p  "Would you like to see the list of HSPs with a specific length based on your previous results (YES/NO): " amino_length
+if [[ "${amino_legth}" -eq "YES" ]]
+then
+	read -p "Number of amino acids you are looking for : " number
+	while read wholeline
+	do
+		read Q_acc S_acc pc_identity alignment_length mismatches gap_opens Q_start Q_end S_start S_end evalue bitscore <<< ${wholeline}
+		if [[ "${alignment_length}" -gt "${number}" ]]
+		then
+			echo -e "${alignment_length}\t${mismatches}"
+			echo -e "${wholeline}" >> aligment_legth_mismatches.exercise.out
+		fi
+	done < "./mismatches.exercise.out"
+	echo "DONE"
+else
+	echo "Skipping"
+fi
+
 
 
 
