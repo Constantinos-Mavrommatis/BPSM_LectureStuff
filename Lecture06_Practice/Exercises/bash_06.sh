@@ -9,12 +9,11 @@ unset IFS
 
 while read wholeline
 do
-	goodlines=$(grep -v "#" | wc -l)
-	echo -e "There are ${goodlines} lines in the file"
 	# We need to get all the lines without the "#"
 	if [[ "${wholeline:0:1}" != "#" ]]
 	then
 		read Q_acc S_acc pc_identity alignment_length mismatches gap_opens Q_start Q_end S_start S_end evalue bitscore <<< ${wholeline}
+		echo -e "${S_acc}"
 		echo -e "${S_acc}" >> Subject_accessions.exercise.out
 	fi
 
