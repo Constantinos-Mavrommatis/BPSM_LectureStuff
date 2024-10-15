@@ -2,9 +2,10 @@
 
 
 input="$PWD/*.fq.gz"
-File_name=$(cat Tco2.fqfiles | awk 'BEGIN{FS="\t";}{print $1, $6, $7;}' | grep "Tco" | head -2) #
+File_name=$(cat Tco2.fqfiles | awk 'BEGIN{FS="\t";}{print $1, $6, $7;}' | grep "Tco" | head -1) #
 Output="$PWD/Outputs"
 rm -f /localdisk/home/s2748062/Exercises/Lecture07/My_First_Pipeline/Outputs/Tco* 
+rm -f /localdisk/home/s2748062/Exercises/Lecture07/My_First_Pipeline/*.sam
 
 read -p "Would you like to acess the quality of your files (YES/NO): " script_run
 
@@ -55,6 +56,22 @@ then
 else
 	echo "Skipping"
 fi
+
+read -p "Would you like to run an allingment (YES/NO): " allingment_run
+
+if [[ ${allingment_run} == YES ]]
+then
+	while read File_Name Pair_1 Pair_2
+	do
+	
+		/localdisk/home/ubuntu-software/bowtie2-2.5.4//bowtie2 --local -x ./Genome_Sequence/Trypanosoma_congolense_IL3000 -1 ${Pair_1} -2 ${Pair_2} -S ${Output}/${File_Name}.sam 
+
+	done <<< ${File_name}
+else
+	echo "Skipping"
+fi
+
+
 
 
 
