@@ -4,8 +4,10 @@
 input="$PWD/*.fq.gz"
 File_name=$(cat Tco2.fqfiles | awk 'BEGIN{FS="\t";}{print $1, $6, $7;}' | grep "Tco" | head -1) #
 Output="$PWD/Outputs"
-rm -f /localdisk/home/s2748062/Exercises/Lecture07/My_First_Pipeline/Outputs/Tco* 
-rm -f /localdisk/home/s2748062/Exercises/Lecture07/My_First_Pipeline/*.sam
+Fastqc_folder="$PWD/Outputs/Fastqc/"
+Aligned_folder="$PWD/Outputs/Aligned/"
+
+rm -fr ${Fastqc_folder}*_Fastqc
 
 echo " "
 
@@ -19,8 +21,8 @@ then
 	do
 		echo -e "Proccessing: ${File_Name} with ${Pair_1}\t${Pair_2}"
 		echo "-----------------------------------------------------------------------------------"
-		mkdir ${Output}/${File_Name}_Fastqc
-		fastqc -o ${Output}/${File_Name}_Fastqc -t 128 ${Pair_1} ${Pair_2}
+		mkdir ${Fastqc_folder}/${File_Name}_Fastqc
+		fastqc -o ${Fastqc_folder}/${File_Name}_Fastqc -t 128 ${Pair_1} ${Pair_2}
 	done <<< ${File_name}
 	
 	echo " "
@@ -36,8 +38,8 @@ then
 			Pair_1_Sum=${Pair_1%.fq.gz}
 			Pair_2_Sum=${Pair_2%.fq.gz}
 			
-			Summarize_1=$(unzip -p "${Output}/${Pair_1_Sum}_fastqc.zip" "*fastqc/fastqc_data.txt")
-			Summarize_2=$(unzip -p "${Output}/${Pair_2_Sum}_fastqc.zip" "*fastqc/fastqc_data.txt")
+			Summarize_1=$(unzip -p "${Fastqc_folder}/${File_Name}_Fastqc/${Pair_1_Sum}_fastqc.zip" "*fastqc/fastqc_data.txt")
+			Summarize_2=$(unzip -p "${Fastqc_folder}/${File_Name}_Fastqc/${Pair_2_Sum}_fastqc.zip" "*fastqc/fastqc_data.txt")
 
 			echo -e "Summarizing file: ${File_Name}"
 
@@ -83,12 +85,13 @@ if [[ ${allingment_run} == YES ]]
 then
 	while read File_Name Pair_1 Pair_2
 	do
+		mkdir ${Aligned_folder}${File_Name}
 
-		/localdisk/home/ubuntu-software/bowtie2-2.5.4//bowtie2 --local -x ./Genome_Sequence/Trypanosoma_congolense_IL3000 -1 ${Pair_1} -2 ${Pair_2} -p 128 -S ${Output}/${File_Name}.sam 
-		samtools view -bS ${Output}/${File_Name}.sam > ${Output}/${File_Name}.bam
-		samtools sort ${Output}/${File_Name}.bam -o ${Output}/${File_Name}_sorted.bam
-		samtools index ${Output}/${File_Name}_sorted.bam
-		samtools flagstat ${Output}/${File_Name}_sorted.bam
+		/localdisk/home/ubuntu-software/bowtie2-2.5.4//bowtie2 --local -x ./Genome_Sequence/Trypanosoma_congolense_IL3000 -1 ${Pair_1} -2 ${Pair_2} -p 128 -S ${Aligned_folder}${File_Name}/${File_Name}.sam 
+		samtools view -bS ${Aligned_folder}${File_Name}/${File_Name}.sam > ${Aligned_folder}${File_Name}/${File_Name}.bam
+		samtools sort ${Aligned_folder}${File_Name}/${File_Name}.bam -o ${Aligned_folder}${File_Name}/${File_Name}_sorted.bam
+		samtools index ${Aligned_folder}${File_Name}/${File_Name}_sorted.bam
+		samtools flagstat ${Aligned_folder}${File_Name}/${File_Name}_sorted.bam
 
 	done <<< ${File_name}
 else
