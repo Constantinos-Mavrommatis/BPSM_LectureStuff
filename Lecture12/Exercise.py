@@ -81,4 +81,3 @@ with open("Non_coding_sequences.fasta", "w") as non_coding_sequences_file:
 
 
 
-
