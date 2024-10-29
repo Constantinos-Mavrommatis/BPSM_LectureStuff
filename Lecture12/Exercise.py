@@ -61,4 +61,24 @@ with open("Remote_sequence_non_coding_02.fasta", "w") as non_coding2_file:
     non_coding2_file.write(">Remote_sequence_non_coding_02_length" + str(len(remote_non_coding2)))
     non_coding2_file.write("\n" + str(remote_non_coding2))
 
+#Here we make a combined output fasta files, one for the exons/coding areas and on for the introns/non coding areas
+
+with open("Coding_sequences.fasta", "w") as coding_sequences_file:
+    coding_sequences_file.write(">Remote_sequence_coding_length" + str(len(remote_coding)))
+    coding_sequences_file.write("\n" + str(remote_coding))
+    coding_sequences_file.write("\n>Local_sequence_exon_01_length" + str(len(local_exon1)))
+    coding_sequences_file.write("\n" + str(local_exon1))
+    coding_sequences_file.write("\n>Local_sequence_exon_02_length" + str(len(local_exon2)))
+    coding_sequences_file.write("\n" + str(local_exon2))
+
+with open("Non_coding_sequences.fasta", "w") as non_coding_sequences_file:
+    non_coding_sequences_file.write(">Remote_sequence_non_coding_01_length" + str(len(remote_non_coding1)))
+    non_coding_sequences_file.write("\n" + str(remote_non_coding1))
+    non_coding_sequences_file.write("\n>Remote_sequence_non_coding_02_length" + str(len(remote_non_coding2)))
+    non_coding_sequences_file.write("\n" + str(remote_non_coding2))
+    non_coding_sequences_file.write("\n>Local_sequence_intron_01_length" + str(len(local_intron)))
+    non_coding_sequences_file.write("\n" + str(local_intron))
+
+
+
 
