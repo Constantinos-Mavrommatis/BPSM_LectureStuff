@@ -1,0 +1,17 @@
+#!/usr/bin/python3
+
+
+sequences = ['ATTGTACGG', 'AATGAACCG', 'AATGAACCC', 'AATGGGAAT']
+
+sequence1 = sequences[1]
+
+for sequence2 in sequences :
+    base_positions = range(0, len(sequence2))
+    similarity_counter = 0
+    for base in base_positions :
+        if sequence1[base] == sequence2[base] :
+            similarity_counter += 1
+    print(f"Similarity between '{sequence1}' and '{sequence2}': {similarity_counter} matching positions")
+
+
+

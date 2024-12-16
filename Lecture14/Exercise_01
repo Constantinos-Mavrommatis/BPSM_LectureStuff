@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+
+import os
+import subprocess
+import shutil
+
+subprocess.call("cp /localdisk/data/BPSM/Lecture14/data.csv ./" , shell = True)
+
+with open("data.csv", "r") as input :
+    for line in input :
+        species_name, sequence, gene_name, expression_level = line.split(",")
+        AT_content = (sequence.upper().count('A') + sequence.upper().count('T')) / len(sequence)
+        if species_name == "Drosophila melanogaster" or species_name == "Drosophila simulans" :
+            print(f"Question 1 [TRUE]: {gene_name} has species name Drosophila melanogaster or Drosophila simulans")
+        else :
+            print(f"Question 1 [FALSE]: {gene_name} has species name {species_name}")
+        if len(sequence) >= 90 and len(sequence) <= 110 :
+            print(f"Question 2 [TRUE]: {gene_name} has between 90 and 110 bases long")
+        else :
+            print(f"Question 2 [FALSE]: {gene_name} has {len(sequence)} bases")
+        if (AT_content < 0.5 and int(expression_level) > 200) :
+            print(f"Question 3 [TRUE]: {gene_name} has AT content less than 0.5 and expression level greater than 200")
+        else :
+            print(f"Question 3 [FALSE]: {gene_name} has AT content of {AT_content} and expression level of {expression_level}")
+        if (gene_name.startswith("k") or gene_name.startswith("h")) and "Drosophila melanogaster" not in species_name :
+            print(f"Question 4 [TRUE]: {gene_name} has a name that begins with 'k' or 'h' and it dosen't belong the species Drosophila melanogaster")
+        else :
+            print(f"Question 4 [FALSE]: {gene_name} and {species_name}")
+
+
+
+

@@ -1,0 +1,25 @@
+#!/usr/bin/python3
+
+dna="ATGCATCATG"
+
+k = 2
+
+n = 2
+
+window = list(range(0,len(dna) - k +1 ,1))
+kmers_found = []
+
+for number in window :
+    kmers = dna[number:number + k]
+    kmers_found.append(kmers)
+
+non_redundant_set = list(set(kmers_found))
+
+for kmer in non_redundant_set :
+    if kmers_found.count(kmer) > n :
+        print(kmer,kmers_found.count(kmer))
+    else :
+        print(kmer,kmers_found.count(kmer))
+
+
+
